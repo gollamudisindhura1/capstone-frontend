@@ -9,6 +9,10 @@ function Dashboard() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const[newProjectName, setNewProjectName] = useState('');
+  const [newProjectDesc, setNewProjectDesc] = useState('');
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,52 +52,139 @@ function Dashboard() {
 
     fetchProjects();
   }, [navigate]);
+  const handleCreateProject = async (e) => {
+  e.preventDefault();
+  const token = localStorage.getItem('token');
+
+  try {
+    const res = await fetch('http://localhost:3000/api/projects', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        name: newProjectName,
+        description: newProjectDesc,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.message || 'Failed to create project');
+
+    // Add new project to list (optimistic update)
+    setProjects([...projects, data]);
+    setShowCreateModal(false);
+    setNewProjectName('');
+    setNewProjectDesc('');
+  } catch (err) {
+    setError(err.message);
+  }
+};
 
   return (
     <div className="container">
-      <h2 className="text-center mb-4">Your Projects</h2>
+    <h2 className="text-center mb-4">Your Projects</h2>
+
+    {/* Logout button */}
+    <div className="text-end mb-3">
       <button
-  className="btn btn-danger mb-4"
-  onClick={() => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  }}
->
-  Logout
-</button>
+        className="btn btn-danger btn-sm"
+        onClick={() => {
+          localStorage.removeItem('token');
+          navigate('/login');
+        }}
+      >
+        Logout
+      </button>
+    </div>
 
-      {loading && <div className="text-center py-5">Loading projects...</div>}
+    {/* Create Project Button */}
+    <div className="text-center mb-4">
+      <button
+        className="btn btn-success btn-lg"
+        onClick={() => setShowCreateModal(true)}  // Opens modal
+      >
+        Create New Project
+      </button>
+    </div>
 
-      {error && <div className="alert alert-danger text-center">{error}</div>}
+    {loading && <div className="text-center py-5">Loading projects...</div>}
 
-      {!loading && !error && projects.length === 0 && (
-        <div className="text-center py-5">
-          <p className="lead">No projects yet. Create one to get started!</p>
-          <button className="btn btn-primary btn-lg">Create New Project</button>
-        </div>
-      )}
+    {error && <div className="alert alert-danger text-center">{error}</div>}
 
-      {!loading && !error && projects.length > 0 && (
-        <div className="row">
-          {projects.map((project) => (
-            <div key={project._id} className="col-md-6 mb-4">
-              <div className="card h-100 shadow-sm">
-                <div className="card-body">
-                  <h5 className="card-title">{project.name}</h5>
-                  <p className="card-text text-muted">
-                    {project.description || 'No description'}
-                  </p>
-                  <small className="text-muted">
-                    Created: {new Date(project.createdAt).toLocaleDateString()}
-                  </small>
-                </div>
+    {!loading && !error && projects.length === 0 && (
+      <div className="text-center py-5">
+        <p className="lead">No projects yet.</p>
+      </div>
+    )}
+
+    {!loading && !error && projects.length > 0 && (
+      <div className="row">
+        {projects.map((project) => (
+          <div key={project._id} className="col-md-6 mb-4">
+            <div className="card h-100 shadow-sm">
+              <div className="card-body">
+                <h5 className="card-title">{project.name}</h5>
+                <p className="card-text text-muted">
+                  {project.description || 'No description'}
+                </p>
+                <small className="text-muted">
+                  Created: {new Date(project.createdAt).toLocaleDateString()}
+                </small>
               </div>
             </div>
-          ))}
+          </div>
+        ))}
+      </div>
+    )}
+
+    {/* Create Project Modal */}
+    {showCreateModal && (
+      <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Create New Project</h5>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => setShowCreateModal(false)}
+              ></button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleCreateProject}>
+                <div className="mb-3">
+                  <label className="form-label">Project Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={newProjectName}
+                    onChange={(e) => setNewProjectName(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Description (optional)</label>
+                  <textarea
+                    className="form-control"
+                    rows="3"
+                    value={newProjectDesc}
+                    onChange={(e) => setNewProjectDesc(e.target.value)}
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary w-100">
+                  Create Project
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
 }
 
 export default Dashboard;
