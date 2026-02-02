@@ -1,5 +1,3 @@
-// src/pages/Login.jsx
-// Login page with Bootstrap form
 // Sends POST to backend /api/auth/login
 // Saves token to localStorage on success and redirects to dashboard
 
