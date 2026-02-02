@@ -1,26 +1,28 @@
+// src/App.jsx
+// Simple app with login and register routes only for testing
+// Add this entire file to replace your current App.jsx
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Login from './pages/Login';      
+import Register from './pages/Register'; 
+import Dashboard from './pages/Dashboard';
 
 function App() {
- const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   return (
     <Router>
       <div className="p-4">
         <Routes>
-          {/* Public routes - use real components */}
-          <Route path="/login" element={token ? <Navigate to="/dashboard" /> : <Login />} />
-          <Route path="/register" element={token ? <Navigate to="/dashboard" /> : <Register />} />
+        <Route path="/login" element={token ? <Navigate to="/dashboard" /> : <Login />} />
+  <Route path="/register" element={token ? <Navigate to="/dashboard" /> : <Register />} />
 
-          {/* Protected placeholder for dashboard */}
-          <Route path="/dashboard" element={token ? <div className="text-center py-5">
-            <h1>Dashboard</h1>
-            <p>Projects list will come here (next step)</p>
-          </div> : <Navigate to="/login" />} />
+  {/* Protected dashboard - CHANGE THIS LINE (was probably missing or placeholder) */}
+  <Route path="/dashboard" element={token ? <Dashboard /> : <Navigate to="/login" />} />
 
-          {/* Redirect everything else to login */}
-          <Route path="*" element={<Navigate to={token ? "/dashboard" : "/login"} replace />} />
+  {/* Redirect root and everything else */}
+  <Route path="*" element={<Navigate to={token ? "/dashboard" : "/login"} replace />} />
+          
         </Routes>
       </div>
     </Router>
