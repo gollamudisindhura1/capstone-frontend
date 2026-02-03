@@ -24,10 +24,16 @@ export default function TaskList({ tasks, setTasks, projectId }) {
       setTasks([...tasks, data]);
       setShowTaskModal(false);
     } catch (err) {
-      console.error('Add task error:', err);
-      alert(`Error adding task: ${err.message}`);
-    }
-  };
+  console.error('Add task error:', err);
+  
+  if (err.message.includes('401') || err?.response?.status === 401) {
+    localStorage.removeItem('token');
+    window.location.href = '/login';   
+  }
+  
+  alert(`Error: ${err.message}`);
+}
+  }
 
   //centralized update logic for status & priority 
   const handleUpdateTask = async (taskId, updates) => {

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import TaskList from './TaskList';
 import ProjectInfo from './ProjectInfo';
+import DayPlanner from '../components/DayPlanner'
 
 function ProjectDetail() {
   const { id } = useParams(); // project ID from URL
@@ -78,8 +79,12 @@ function ProjectDetail() {
 
       {/* Day Planner Placeholder */}
       <div className="mt-5 pt-5 border-top">
-        <h4>Day Planner View (Coming Soon)</h4>
-        <p>Here we will show tasks by date with a calendar/timeline.</p>
+        <h4>Day Planner View </h4>
+       <DayPlanner 
+    tasks={tasks} 
+    projectId={id} 
+    setTasks={setTasks}   
+  />
       </div>
     </div>
   );
