@@ -4,6 +4,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ProjectDetail from './pages/ProjectDetail'; 
 
+
 function App() {
   const token = localStorage.getItem('token');
 
@@ -20,32 +21,32 @@ function App() {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto">
                 {token ? (
-                  <>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/dashboard">Dashboard</a>
-                    </li>
-                    <li className="nav-item">
-                      <button 
-                        className="btn btn-outline-light btn-sm"
-                        onClick={() => {
-                          localStorage.removeItem('token');
-                          window.location.href = '/login';
-                        }}
-                      >
-                        Logout
-                      </button>
-                    </li>
-                  </>
-                ) : (
-                  <>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/login">Login</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/register">Register</a>
-                    </li>
-                  </>
-                )}
+  <>
+    <li className="nav-item">
+      <a className="nav-link active" href="/dashboard">Dashboard</a>
+    </li>
+    <li className="nav-item">
+      <button 
+        className="btn btn-outline-light btn-sm"
+        onClick={() => {
+          localStorage.removeItem('token');
+          window.location.href = '/login';
+        }}
+      >
+        Logout
+      </button>
+    </li>
+  </>
+) : (
+  <>
+    <li className="nav-item">
+      <a className="nav-link" href="/login">Login</a>
+    </li>
+    <li className="nav-item">
+      <a className="nav-link" href="/register">Register</a>
+    </li>
+  </>
+)}
               </ul>
             </div>
           </div>

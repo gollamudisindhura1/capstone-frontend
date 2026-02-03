@@ -1,4 +1,3 @@
-// src/pages/Dashboard.jsx
 // Shows list of user's projects fetched from backend
 // Uses token from localStorage for auth
 
@@ -12,6 +11,7 @@ function Dashboard() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const[newProjectName, setNewProjectName] = useState('');
   const [newProjectDesc, setNewProjectDesc] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
 
   const navigate = useNavigate();
 
@@ -51,7 +51,7 @@ function Dashboard() {
     };
 
     fetchProjects();
-  }, [navigate]);
+  }, []);
   const handleCreateProject = async (e) => {
   e.preventDefault();
   const token = localStorage.getItem('token');
@@ -78,6 +78,8 @@ function Dashboard() {
     setShowCreateModal(false);
     setNewProjectName('');
     setNewProjectDesc('');
+    setSuccessMsg('Project created successfully!');
+    setTimeout(() => setSuccessMsg(''), 3000);
   } catch (err) {
     setError(err.message);
   }
@@ -86,6 +88,11 @@ function Dashboard() {
   return (
     <div className="container">
     <h2 className="text-center mb-4">Your Projects</h2>
+    {successMsg && (
+  <div className="alert alert-success text-center mb-4">
+    {successMsg}
+  </div>
+)}
 
     {/* Logout button */}
     <div className="text-end mb-3">
@@ -124,7 +131,9 @@ function Dashboard() {
       <div className="row">
         {projects.map((project) => (
           <div key={project._id} className="col-md-6 mb-4">
-            <div className="card h-100 shadow-sm">
+            <div className="card h-100 shadow-sm"
+                style={{ cursor: 'pointer' }}  
+                onClick={() => navigate(`/projects/${project._id}`)}>
               <div className="card-body">
                 <h5 className="card-title">{project.name}</h5>
                 <p className="card-text text-muted">
@@ -138,6 +147,7 @@ function Dashboard() {
           </div>
         ))}
       </div>
+    
     )}
 
     {/* Create Project Modal */}

@@ -46,23 +46,24 @@ function Login() {
 
   return (
     <div className="row justify-content-center mt-5">
-      <div className="col-md-6 col-lg-5">
-        <div className="card shadow">
-          <div className="card-body p-5">
-            <h2 className="text-center mb-4 text-primary">Login</h2>
+      <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+        <div className="card shadow-lg border-0 rounded-4 overflow-hidden">
+          <div className="card-body p-5 p-md-5">
+            <h2 className="text-center mb-4 fw-bold text-primary">Login</h2>
 
             {error && (
-              <div className="alert alert-danger" role="alert">
+              <div className="alert alert-danger alert-dismissible fade show mb-4" role="alert">
                 {error}
-              </div>
+              <button type="button" className="btn-close" onClick={() => setError('')}></button>
+            </div>
             )}
 
             <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">Email</label>
+              <div className="mb-4">
+                <label htmlFor="email" className="form-label fw-semibold">Email</label>
                 <input
                   type="email"
-                  className="form-control"
+                  className="form-control form-control-lg rounded-3"
                   id="email"
                   placeholder="Enter email"
                   value={email}
@@ -71,11 +72,11 @@ function Login() {
                 />
               </div>
 
-              <div className="mb-3">
-                <label htmlFor="password" className="form-label">Password</label>
+              <div className="mb-4">
+                <label htmlFor="password" className="form-label fw-semibold">Password</label>
                 <input
                   type="password"
-                  className="form-control"
+                  className="form-control form-control-lg rounded-3"
                   id="password"
                   placeholder="Enter password"
                   value={password}
@@ -86,16 +87,24 @@ function Login() {
 
               <button
                 type="submit"
-                className="btn btn-primary w-100"
+                className="btn btn-primary btn-lg w-100 rounded-3 fw-semibold"
                 disabled={loading}
               >
-                {loading ? 'Logging in...' : 'Login'}
+                {loading ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Logging in...
+                </>
+              ) : (
+                'Login'
+              )}
               </button>
             </form>
 
-            <p className="text-center mt-3">
-              No account? <a href="/register" className="text-primary">Register</a>
-            </p>
+            <p className="text-center mt-4 mb-0">
+              Don't have an account?{' '}
+            <a href="/register" className="text-primary fw-bold text-decoration-none">Register here</a>
+          </p>
           </div>
         </div>
       </div>
