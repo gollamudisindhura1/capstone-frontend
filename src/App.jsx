@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect, useState} from 'react';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -7,12 +8,28 @@ import ProjectDetail from './pages/ProjectDetail';
 
 function App() {
   const token = localStorage.getItem('token');
+  const [theme, setTheme] = useState(() => {
+  const saved = localStorage.getItem('theme');
+  return saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+});
+useEffect(() => {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+}, [theme]);
 
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100 bg-light">
         {/* Navbar - visible on all pages */}
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <li className="nav-item">
+  <button
+    className="btn btn-outline-light btn-sm ms-2"
+    onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+  >
+    {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
+  </button>
+</li>
           <div className="container-fluid">
             <a className="navbar-brand fw-bold" href="/">Pro-Tasker</a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
