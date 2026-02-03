@@ -1,3 +1,6 @@
+/* src/App.css - Layout & component styling */
+
+/* Auth pages */
 .auth-wrapper {
   min-height: calc(100vh - 140px);
   display: flex;
@@ -9,6 +12,7 @@
 .auth-card {
   width: 100%;
   max-width: 480px;
+  backdrop-filter: blur(12px);
   border-radius: 1.25rem;
   overflow: hidden;
   box-shadow: var(--shadow);
@@ -20,56 +24,33 @@
 }
 
 .auth-card h2 {
-  font-weight: 700;
-  color: var(--primary);
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 2rem;
 }
 
 /* Navbar */
-.navbar {
-  background: var(--primary) !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+.navbar-brand {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
 }
 
-.nav-link {
-  color: white !important;
-}
-
-.nav-link:hover,
-.nav-link.active {
-  color: #ffffffcc !important;
-}
-
-/* Cards hover effect */
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-}
-
-/* Modals */
-.modal-content {
-  background: var(--bg-card);
-  color: var(--text-primary);
-  border-radius: 1.25rem;
-  border: none;
+/* Cards */
+.card-title {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
 }
 
 /* Footer */
-footer {
-  background: rgba(15, 23, 42, 0.95);
-  color: #94a3b8;
-  padding: 2rem 0;
-  margin-top: auto;
-  text-align: center;
-}
-
-/* Task & project card enhancements */
-.card-title {
-  color: var(--text-primary);
+footer p {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-weight: 600;
-}
-
-.badge {
-  font-weight: 500;
-  padding: 0.5em 1em;
 }

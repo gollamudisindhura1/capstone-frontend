@@ -1,3 +1,6 @@
+/* src/index.css - Unique cyber-night theme + dark mode foundation */
+
+/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -7,64 +10,144 @@
 body {
   font-family: 'Inter', system-ui, sans-serif;
   line-height: 1.6;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #000814 0%, #001233 100%);
+  color: #e0f7ff;
+  background-attachment: fixed;
+  overflow-x: hidden;
 }
 
-/* Light mode (default) */
+/* Animated subtle neon particle background (CSS only) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 15% 25%, rgba(0, 245, 212, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 85% 75%, rgba(255, 0, 170, 0.04) 0%, transparent 60%);
+  animation: pulse 15s infinite alternate ease-in-out;
+  pointer-events: none;
+  z-index: -2;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 0.9; transform: scale(1.05); }
+}
+
+/* Theme variables (no purple!) */
 :root {
-  --bg-body: #f8f9fa;
-  --bg-card: #ffffff;
-  --text-primary: #212529;
-  --text-secondary: #6c757d;
-  --border: #dee2e6;
+  --bg-body: #f0f4f8;
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --text-primary: #0d1b2a;
+  --text-secondary: #778da9;
+  --border: #e0e7ff;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  --primary: #0d6efd;
-  --primary-hover: #0b5ed7;
-  --success: #198754;
-  --danger: #dc3545;
-  --warning: #ffc107;
-  --info: #0dcaf0;
+  --primary: #00f5d4;        /* Electric teal-cyan */
+  --primary-hover: #00d4ff;
+  --secondary: #ff00aa;       /* Neon magenta */
+  --success: #00ff9d;
+  --danger: #ff4d6d;
+  --warning: #ffdd57;
+  --info: #00d4ff;
 }
 
-/* Dark mode */
+/* Dark mode (default) */
 [data-theme="dark"] {
-  --bg-body: #0f0f1a;
-  --bg-card: #1e1e1e;
-  --text-primary: #e0e0ff;
-  --text-secondary: #a0a0c0;
-  --border: #333355;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
-  --success: #10b981;
-  --danger: #ef4444;
-  --warning: #f59e0b;
-  --info: #3b82f6;
+  --bg-body: #000814;
+  --bg-card: rgba(10, 25, 47, 0.75);
+  --text-primary: #e0f7ff;
+  --text-secondary: #a3bffa;
+  --border: rgba(0, 245, 212, 0.18);
+  --shadow: 0 10px 30px rgba(0, 245, 212, 0.08);
+  --primary: #00f5d4;
+  --primary-hover: #00d4ff;
+  --secondary: #ff4db8;
+  --success: #00ff9d;
+  --danger: #ff4d6d;
+  --warning: #ffdd57;
+  --info: #00d4ff;
 }
 
-/* Apply variables globally */
+/* Apply variables */
 body {
   background-color: var(--bg-body);
   color: var(--text-primary);
 }
 
 .card {
-  background-color: var(--bg-card);
-  border-color: var(--border);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  border-radius: 1.25rem;
+  transition: all 0.3s ease;
 }
 
-.form-control {
-  background-color: var(--bg-card);
-  color: var(--text-primary);
-  border-color: var(--border);
-}
-
-.btn-primary {
-  background-color: var(--primary);
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0, 245, 212, 0.12);
   border-color: var(--primary);
 }
 
-.btn-primary:hover {
-  background-color: var(--primary-hover);
+/* Buttons with neon glow */
+.btn-primary {
+  background: linear-gradient(90deg, var(--primary), #00d4ff);
+  border: none;
+  border-radius: 1rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  color: #000814;
+  transition: all 0.25s;
+  box-shadow: 0 4px 15px rgba(0, 245, 212, 0.3);
 }
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, var(--primary-hover), #00b8ff);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 245, 212, 0.5);
+}
+
+/* Forms */
+.form-control {
+  background: rgba(10, 25, 47, 0.6);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.25rem;
+}
+
+.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.25rem rgba(0, 245, 212, 0.25);
+  background: rgba(10, 25, 47, 0.8);
+}
+
+/* Modals */
+.modal-content {
+  background: rgba(10, 25, 47, 0.95);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  color: var(--text-primary);
+}
+
+/* Navbar */
+.navbar {
+  background: rgba(10, 25, 47, 0.92) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Footer */
+footer {
+  background: rgba(5, 10, 25, 0.95);
+  border-top: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+/* Badges */
+.badge.bg-success { background-color: var(--success) !important; }
+.badge.bg-warning { background-color: var(--warning) !important; }
+.badge.bg-danger { background-color: var(--danger) !important; }
+.badge.bg-info { background-color: var(--info) !important; }
