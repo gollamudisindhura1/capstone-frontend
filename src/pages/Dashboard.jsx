@@ -57,7 +57,7 @@ function Dashboard() {
   const token = localStorage.getItem('token');
 
   try {
-    const res = await fetch('http://localhost:3000/api/projects', {
+    const res = await fetch('${import.meta.env.VITE_BACKEND_URL}/api/projects', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

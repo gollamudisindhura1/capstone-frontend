@@ -23,7 +23,7 @@ function ProjectDetail() {
 
       try {
         // 1. Fetch project details
-        const projectRes = await fetch(`http://localhost:3000/api/projects/${id}`, {
+        const projectRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/projects/${id}`, {
           headers: { 'Authorization': `Bearer ${token}` },
         });
 
@@ -33,7 +33,7 @@ function ProjectDetail() {
         setProject(projectData);
 
         // 2. Fetch tasks for this project
-        const tasksRes = await fetch(`http://localhost:3000/api/projects/${id}/tasks`, {
+        const tasksRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/projects/${id}/tasks`, {
           headers: { 'Authorization': `Bearer ${token}` },
         });
 

@@ -6,6 +6,8 @@ export default function TaskList({ tasks, setTasks, projectId }) {
   const [editingTask, setEditingTask] = useState(null);
   const [saving, setSaving] = useState(false);
 
+  const API_BASE = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+
   //status/priority update
  
   const handleUpdateTask = async (taskId, updates) => {
@@ -16,7 +18,7 @@ export default function TaskList({ tasks, setTasks, projectId }) {
     }
     
     try {
-      const res = await fetch(`http://localhost:3000/api/projects/${projectId}/tasks/${taskId}`, {
+      const res = await fetch(`${API_BASE}/api/projects/${projectId}/tasks/${taskId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +55,7 @@ export default function TaskList({ tasks, setTasks, projectId }) {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/api/projects/${projectId}/tasks/${taskId}`, {
+      const res = await fetch(`${API_BASE}/api/projects/${projectId}/tasks/${taskId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -98,7 +100,7 @@ export default function TaskList({ tasks, setTasks, projectId }) {
 
       if (editingTask) {
         // EDIT mode
-        res = await fetch(`http://localhost:3000/api/projects/${projectId}/tasks/${editingTask._id}`, {
+        res = await fetch(`${API_BASE}/api/projects/${projectId}/tasks/${editingTask._id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -119,7 +121,7 @@ export default function TaskList({ tasks, setTasks, projectId }) {
         );
       } else {
         // ADD mode
-        res = await fetch(`http://localhost:3000/api/projects/${projectId}/tasks`, {
+        res = await fetch(`${API_BASE}/api/projects/${projectId}/tasks`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
