@@ -24,7 +24,7 @@ function Dashboard() {
       }
 
       try {
-        const response = await fetch('${import.meta.env.VITE_BACKEND_URL}/api/projects', {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/projects`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -51,13 +51,14 @@ function Dashboard() {
     };
 
     fetchProjects();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleCreateProject = async (e) => {
   e.preventDefault();
   const token = localStorage.getItem('token');
 
   try {
-    const res = await fetch('${import.meta.env.VITE_BACKEND_URL}/api/projects', {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/projects`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
