@@ -2,7 +2,7 @@
 // Saves token and redirects on success
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -141,12 +141,12 @@ function Register() {
 
           <p className="text-center mt-4 mb-0">
             Already have an account?{" "}
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="text-primary fw-bold text-decoration-none"
-            >
+            />
               Login here
-            </a>
+          
           </p>
         </div>
       </div>
