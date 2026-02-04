@@ -15,7 +15,7 @@ Backend API:
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
   <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62C" alt="Vite">
   <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap">
-  <img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License: MIT">
+  
 </p>
 
 ## Features
@@ -49,6 +49,17 @@ Backend API:
   <img src="frontend/public/screenshots/Screenshot 2026-02-04 at 2.11.46 PM.png" alt="Dark Mode Calendar" width="45%">
 </p>
 
+## Resources & References
+
+React: https://react.dev/
+Vite: https://vitejs.dev
+React Router: https://reactrouter.com
+React Big Calendar: https://jquense.github.io/react-big-calendar
+date-fns: https://date-fns.org
+Bootstrap 5: https://getbootstrap.com
+Icons: Bootstrap Icons
+Dark/Light Theme: CSS variables + localStorage persistence
+
 ## Dependencies (main ones from package.json)
 
 ```json
@@ -67,14 +78,3 @@ Backend API:
     "@vitejs/plugin-react": "^4.2.0"
   }
 }
-
-Resources & References
-
-React: https://react.dev/
-Vite: https://vitejs.dev
-React Router: https://reactrouter.com
-React Big Calendar: https://jquense.github.io/react-big-calendar
-date-fns: https://date-fns.org
-Bootstrap 5: https://getbootstrap.com
-Icons: Bootstrap Icons
-Dark/Light Theme: CSS variables + localStorage persistence
