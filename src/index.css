@@ -196,7 +196,7 @@ footer {
   color: #94a3b8 !important;
 }
 
-/* Floating theme toggle – FANCY glowing orb  */
+/* Floating theme toggle */
 .theme-toggle {
   position: fixed;
   bottom: 30px;
@@ -228,9 +228,7 @@ footer {
   0% { box-shadow: 0 8px 25px rgba(0, 245, 212, 0.5); }
   100% { box-shadow: 0 15px 40px rgba(0, 245, 212, 0.8); }
 }
-/* ──────────────────────────────────────────────── */
-/*      FIX INPUT FIELD VISIBILITY (text when typing) */
-/* ──────────────────────────────────────────────── */
+
 
 /* Light mode inputs – make sure text is dark */
 [data-theme="light"] .form-control,
