@@ -2,64 +2,60 @@ import { useState, useMemo } from 'react';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
-import startOfWeek from 'date-fns/startOfWeek';
+import startOfWeekFn from 'date-fns/startOfWeek';
 import getDay from 'date-fns/getDay';
+import endOfWeekFn from 'date-fns/endOfWeek';
 import enUS from 'date-fns/locale/en-US';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
 const localizer = dateFnsLocalizer({
-    format,
-    parse,
-    startOfWeek,
-    getDay,
-    locales: {'en-US': enUS}
+  format,
+  parse,
+  startOfWeek: startOfWeekFn,
+  getDay,
+  locales: { 'en-US': enUS },
 });
 
 const DnDCalendar = withDragAndDrop(Calendar);
 
-export default function DayPlanner({tasks, projectId, setTasks}){
-    const [currentDate, setCurrentDate] = useState(new Date());
+export default function DayPlanner({ tasks, projectId, setTasks }) {
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentView, setCurrentView] = useState('week'); // 'day', 'week', 'month'
 
+  // Convert tasks → calendar events
   const events = useMemo(() => {
-  return tasks
-    .filter(task => task.startTime || task.endTime || task.dueDate)
-    .map(task => {
-      let start, end;
+    return tasks
+      .filter(task => task.startTime || task.endTime || task.dueDate)
+      .map(task => {
+        let start = task.startTime ? new Date(task.startTime) 
+                  : task.dueDate ? new Date(task.dueDate) 
+                  : new Date();
+        let end = task.endTime ? new Date(task.endTime) : new Date(start);
 
-      if (task.startTime) {
-        start = new Date(task.startTime); 
-      } else if (task.dueDate) {
-        start = new Date(task.dueDate);
-      } else {
-        start = new Date(); // fallback
-      }
+        // Default 1-hour block if only dueDate
+        if (!task.startTime && !task.endTime) {
+          end.setHours(end.getHours() + 1);
+        }
 
-      if (task.endTime) {
-        end = new Date(task.endTime);
-      } else {
-        // Default duration if only start or dueDate
-        end = new Date(start);
-        end.setHours(end.getHours() + 1); // 1-hour block
-      }
+        return {
+          id: task._id,
+          title: task.title + (task.status === 'Done' ? ' ✓' : ''),
+          start,
+          end,
+          allDay: !task.startTime && !task.endTime,
+          resource: task,
+          priority: task.priority,
+          status: task.status,
+        };
+      });
+  }, [tasks]);
 
-      return {
-        id: task._id,
-        title: task.title + (task.status === 'Done' ? ' ✓' : ''),
-        start,
-        end,
-        allDay: !task.startTime && !task.endTime, // all-day if no time specified
-        resource: task,
-        priority: task.priority,
-        status: task.status,
-      };
-    });
-}, [tasks]);
-
-  const handleEventDrop = async ({ event, start, end }) => {
-    
-    const task = event.resource;           
+  // Handle drag/drop or resize
+  const handleEventDropOrResize = async ({ event, start, end }) => {
+    const task = event.resource;
+    if (!task) return;
 
     try {
       const token = localStorage.getItem('token');
@@ -67,55 +63,136 @@ export default function DayPlanner({tasks, projectId, setTasks}){
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ dueDate: start.toISOString() }),
+        body: JSON.stringify({
+          startTime: start.toISOString(),
+          endTime: end.toISOString(),
+        }),
       });
 
-      if (!res.ok) throw new Error('Failed to update due date');
+      if (!res.ok) throw new Error('Failed to update');
 
       // Optimistic update
       setTasks(prev =>
         prev.map(t =>
-          t._id === task._id ? { ...t, dueDate: start.toISOString() } : t
+          t._id === task._id ? { ...t, startTime: start.toISOString(), endTime: end.toISOString() } : t
         )
       );
     } catch (err) {
-      console.error('Drag-drop update failed:', err);
-      alert('Could not update task date');
-     
+      console.error('Calendar update failed:', err);
+      alert('Could not update task');
     }
   };
 
+  // Custom toolbar with navigation + view switcher + dynamic title
+  const CustomToolbar = (toolbar) => {
+    const goToBack = () => toolbar.onNavigate('PREV');
+    const goToNext = () => toolbar.onNavigate('NEXT');
+    const goToToday = () => toolbar.onNavigate('TODAY');
+
+    // Dynamic title based on current view
+    const getTitle = () => {
+      const date = toolbar.date;
+      if (currentView === 'day') {
+        return format(date, 'EEEE, MMMM d, yyyy', { locale: enUS });
+      } else if (currentView === 'week') {
+        const start = startOfWeekFn(date, { weekStartsOn: 0 });
+        const end = endOfWeekFn(date, { weekStartsOn: 0 });
+        return `${format(start, 'MMM d')} – ${format(end, 'MMM d, yyyy')}`;
+      } else {
+        return format(date, 'MMMM yyyy', { locale: enUS });
+      }
+    };
+
+    return (
+      <div className="rbc-toolbar mb-4">
+        {/* Navigation */}
+        <div className="d-flex gap-2 mb-3 justify-content-center justify-content-md-start flex-wrap">
+          <button className="btn btn-outline-primary btn-sm px-4 py-2" onClick={goToToday}>
+            Today
+          </button>
+          <button className="btn btn-outline-secondary btn-sm px-4 py-2" onClick={goToBack}>
+            ← Back
+          </button>
+          <button className="btn btn-outline-secondary btn-sm px-4 py-2" onClick={goToNext}>
+            Next →
+          </button>
+        </div>
+
+        {/* Fancy centered title */}
+        <h3 
+          className="text-center mb-3 fw-bold" 
+          style={{ 
+            color: 'var(--primary)',
+            background: 'linear-gradient(90deg, transparent, rgba(0,245,212,0.12), transparent)',
+            padding: '10px 0',
+            borderRadius: '12px'
+          }}
+        >
+          {getTitle()}
+        </h3>
+
+        {/* View switcher */}
+        <div className="btn-group w-100 mb-3" role="group">
+          <button
+            type="button"
+            className={`btn ${currentView === 'day' ? 'btn-primary' : 'btn-outline-primary'} btn-sm py-2`}
+            onClick={() => setCurrentView('day')}
+          >
+            Day
+          </button>
+          <button
+            type="button"
+            className={`btn ${currentView === 'week' ? 'btn-primary' : 'btn-outline-primary'} btn-sm py-2`}
+            onClick={() => setCurrentView('week')}
+          >
+            Week
+          </button>
+          <button
+            type="button"
+            className={`btn ${currentView === 'month' ? 'btn-primary' : 'btn-outline-primary'} btn-sm py-2`}
+            onClick={() => setCurrentView('month')}
+          >
+            Month
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div style={{ height: '600px' }}>
+    <div style={{ height: '750px', marginTop: '2rem' }}>
       <DnDCalendar
         localizer={localizer}
         events={events}
-        defaultView="week"               // or "day"
-        views={['day', 'week', 'month']}
-        step={60}
-        timeslots={1}
         date={currentDate}
-        onNavigate={date => setCurrentDate(date)}
-        onEventDrop={handleEventDrop}
+        view={currentView}
+        onView={setCurrentView}
+        onNavigate={setCurrentDate}
+        onEventDrop={handleEventDropOrResize}
+        onEventResize={handleEventDropOrResize}
         resizable
-        onEventResize={handleEventDrop}   
-        style={{ height: '100%' }}
+        selectable
+        popup
+        showMultiDayTimes
+        components={{
+          toolbar: CustomToolbar,
+        }}
         eventPropGetter={(event) => ({
           style: {
             backgroundColor:
               event.priority === 'High' ? '#ff4d4d' :
               event.priority === 'Medium' ? '#ffaa00' : '#4CAF50',
-            borderRadius: '4px',
-            opacity: event.status === 'Done' ? 0.6 : 1,
-          }
+            borderRadius: '8px',
+            opacity: event.status === 'Done' ? 0.7 : 1,
+            color: 'white',
+            border: 'none',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+          },
         })}
-        tooltipAccessor="title"
+        style={{ height: '100%' }}
       />
     </div>
   );
-
-
 }
-    

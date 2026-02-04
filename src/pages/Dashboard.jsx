@@ -95,7 +95,7 @@ function Dashboard() {
 )}
 
     {/* Logout button */}
-    <div className="text-end mb-3">
+    {/* <div className="text-end mb-3">
       <button
         className="btn btn-danger btn-sm"
         onClick={() => {
@@ -105,7 +105,7 @@ function Dashboard() {
       >
         Logout
       </button>
-    </div>
+    </div> */}
 
     {/* Create Project Button */}
     <div className="text-center mb-4">

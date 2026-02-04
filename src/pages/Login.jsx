@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Login() {
+function Login({ setToken }) { 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -18,6 +18,8 @@ function Login() {
     setLoading(true);
 
     try {
+      console.log('1. Attempting login with:', { email });
+
       const response = await fetch('http://localhost:3000/api/auth/login', {
         method: 'POST',
         headers: {
@@ -26,31 +28,44 @@ function Login() {
         body: JSON.stringify({ email, password }),
       });
 
+      console.log('2. Response status:', response.status);
+
       const data = await response.json();
+      console.log('3. Response data:', data);
 
       if (!response.ok) {
         throw new Error(data.message || 'Login failed');
       }
 
-      // Save token
+      console.log('4. Saving token...');
       localStorage.setItem('token', data.token);
 
-      // Redirect
-      navigate('/dashboard');
+      // Update parent token state 
+      if (setToken) {
+        setToken(data.token);
+        console.log('5. Parent token state updated');
+      }
+
+      // Save first name if returned
+      if (data.user?.firstName) {
+        localStorage.setItem('userName', data.user.firstName);
+      }
+
+      console.log('6. Redirecting to dashboard');
+      navigate('/dashboard', { replace: true });
+
     } catch (err) {
-      setError(err.message);
+      console.error('Login error:', err);
+      setError(err.message || 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    
     <div className="auth-wrapper">
-      
       <div className="auth-card card shadow-lg border-0 rounded-4 overflow-hidden">
         <div className="card-body p-5 p-md-5">
-         
           <h2 className="text-center mb-5 fw-bold" style={{ color: 'var(--primary)' }}>
             Login
           </h2>
@@ -58,7 +73,6 @@ function Login() {
           {error && (
             <div className="alert alert-danger alert-dismissible fade show mb-4" role="alert">
               {error}
-             
               <button type="button" className="btn-close" onClick={() => setError('')}></button>
             </div>
           )}
@@ -74,6 +88,7 @@ function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                disabled={loading}
               />
             </div>
 
@@ -87,6 +102,7 @@ function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={loading}
               />
             </div>
 
@@ -106,7 +122,6 @@ function Login() {
             </button>
           </form>
 
-          
           <p className="text-center mt-4 mb-0">
             Don't have an account?{' '}
             <a href="/register" className="text-primary fw-bold text-decoration-none">
