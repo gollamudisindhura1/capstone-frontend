@@ -8,8 +8,8 @@ Frontend for Pro-Tasker this is a full-stack task management app.
 - Create/edit tasks with due dates/times/priorities/statuses.
 - View tasks in an interactive Day/Week/Month planner.
 
-Live Demo:
-Backend API:
+Live Demo: https://pro-tasker-capstone-frontend.onrender.com 
+Backend API: https://pro-tasker-capstone-backend.onrender.com
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">

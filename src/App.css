@@ -1,4 +1,6 @@
-/* Auth pages */
+/* src/App.css - Layout & component styling (cleaned, no overwrites) */
+
+/* Auth pages (login/register) */
 .auth-wrapper {
   min-height: calc(100vh - 140px);
   display: flex;
@@ -15,107 +17,174 @@
   overflow: hidden;
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
+  background: var(--bg-card);
 }
 
 .auth-card .card-body {
   padding: 3rem 2.5rem;
+  background: transparent;
 }
 
 .auth-card h2 {
   font-weight: 800;
   background: linear-gradient(90deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 /* Navbar */
+.navbar {
+  background: linear-gradient(90deg, #90051e 0%, #ff6b8b 50%, #352fe9 100%) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: #ffffff !important;
+  padding: 1rem 0;
+}
+
 .navbar-brand {
   background: linear-gradient(90deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 900;
+  font-size: 1.6rem;
+}
+
+.nav-link {
+  color: #cbd5e1 !important;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #c7d2fe !important;
 }
 
 /* Cards */
+.card {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow) !important;
+  backdrop-filter: blur(12px);
+  border-radius: 1.25rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0, 245, 212, 0.12);
+  border-color: var(--primary) !important;
+}
+
 .card-title {
   background: linear-gradient(90deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 700;
 }
 
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(90deg, var(--primary), var(--secondary)) !important;
+  border: none !important;
+  border-radius: 1rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.25s;
+  box-shadow: 0 4px 15px rgba(0, 245, 212, 0.3);
+  color: #000814 !important;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, var(--primary-hover), #00b8ff) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 245, 212, 0.5);
+}
+
 /* Footer */
+footer {
+  background: rgba(5, 10, 25, 0.95) !important;
+  border-top: 1px solid var(--border) !important;
+  color: var(--text-secondary) !important;
+  padding: 2rem 0;
+  margin-top: auto;
+  text-align: center;
+}
+
 footer p {
   background: linear-gradient(90deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 600;
-}
-/* Make modal background slightly lighter but still dark */
-.modal-content {
-  background: rgba(20, 35, 60, 0.98) !important;   /* darker blue-gray, more opaque */
-  color: #e2e8f0 !important;                       /* light gray-white text */
-  border: 1px solid rgba(0, 245, 212, 0.3) !important; /* subtle teal border */
+  margin: 0;
 }
 
-/* Fix inputs, textareas, selects inside modal */
-.modal-content .form-control,
-.modal-content .form-select,
-.modal-content textarea.form-control {
-  background-color: #1e293b !important;            /* slate-900 — visible dark */
-  color: #f1f5f9 !important;                       /* very light gray */
-  border: 1px solid #475569 !important;            /* slate-600 border */
-  border-radius: 0.75rem;
+/* Theme toggle button (floating) */
+.theme-toggle {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #000814;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(0, 245, 212, 0.5);
+  border: none;
+  cursor: pointer;
+  z-index: 1050;
+  transition: all 0.4s ease;
+  animation: glow-pulse 3s infinite alternate;
 }
 
-/* Placeholder text - make it readable */
-.modal-content .form-control::placeholder {
-  color: #94a3b8 !important;                       /* slate-400 — visible but subtle */
-  opacity: 1 !important;
+.theme-toggle:hover {
+  transform: scale(1.2) rotate(10deg);
+  box-shadow: 0 15px 40px rgba(0, 245, 212, 0.7);
+  animation: none;
 }
 
-/* Focus state - neon teal glow */
-.modal-content .form-control:focus,
-.modal-content .form-select:focus {
-  border-color: var(--primary) !important;         /* #00f5d4 */
-  box-shadow: 0 0 0 0.25rem rgba(0, 245, 212, 0.35) !important;
-  background-color: #0f172a !important;            /* slightly darker when focused */
+@keyframes glow-pulse {
+  0% { box-shadow: 0 8px 25px rgba(0, 245, 212, 0.5); }
+  100% { box-shadow: 0 15px 40px rgba(0, 245, 212, 0.8); }
 }
 
-/* Labels inside modal */
-.modal-content .form-label {
-  color: #cbd5e1 !important;                       /* slate-300 — clear */
-  font-weight: 600;
+/* Make sure Bootstrap light classes don't leak in dark mode */
+[data-theme="dark"] .bg-light,
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] .bg-body,
+[data-theme="dark"] .bg-primary,
+[data-theme="dark"] .bg-secondary,
+[data-theme="dark"] .bg-success,
+[data-theme="dark"] .bg-danger,
+[data-theme="dark"] .bg-warning,
+[data-theme="dark"] .bg-info {
+  background-color: var(--bg-card) !important;
+  color: var(--text-primary) !important;
 }
 
-/* Muted text (like "Due Date (optional)") */
-.modal-content .text-muted {
-  color: #94a3b8 !important;                       /* slate-400 */
+/* Force text readability */
+[data-theme="dark"] .text-muted,
+[data-theme="dark"] .text-secondary {
+  color: #94a3b8 !important;
 }
 
-/* Select dropdown arrow & options */
-.modal-content .form-select {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23cbd5e1' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
-  background-color: #1e293b !important;
-  color: #f1f5f9 !important;
-}
-
-/* Date input calendar icon (browser default) */
-.modal-content input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.8) brightness(1.2) !important;   /* make calendar icon visible */
-}
-
-/* Optional: brighter submit button */
-.modal-content .btn-primary {
-  background: linear-gradient(90deg, #00f5d4, #00d4ff) !important;
-  color: #0f172a !important;                       /* dark text on bright button */
-  border: none !important;
-  box-shadow: 0 4px 15px rgba(0, 245, 212, 0.4) !important;
-}
-
-.modal-content .btn-primary:hover {
-  background: linear-gradient(90deg, #00d4ff, #00b8ff) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 245, 212, 0.6) !important;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .auth-card .card-body {
+    padding: 2rem 1.5rem;
+  }
+  .navbar-brand {
+    font-size: 1.4rem;
+  }
 }
