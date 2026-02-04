@@ -2,7 +2,7 @@
 // Saves token to localStorage on success and redirects to dashboard
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 
 function Login({ setToken }) { 
   const [email, setEmail] = useState('');
@@ -124,9 +124,9 @@ function Login({ setToken }) {
 
           <p className="text-center mt-4 mb-0">
             Don't have an account?{' '}
-            <a href="/register" className="text-primary fw-bold text-decoration-none">
+            <Link to="/register" className="text-primary fw-bold text-decoration-none">
               Register here
-            </a>
+            </Link>
           </p>
         </div>
       </div>

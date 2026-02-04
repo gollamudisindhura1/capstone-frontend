@@ -5,6 +5,7 @@ import {
   Routes,
   Route,
   Navigate,
+  Link
 } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Login from "./pages/Login";
@@ -77,9 +78,9 @@ function App() {
   <div className="container-fluid">
     {/* Brand + User name – always visible */}
     <div className="d-flex align-items-center gap-4">
-      <a className="navbar-brand fw-bold fs-4" href="/">
-        Pro-Tasker
-      </a>
+      <Link className="navbar-brand fw-bold fs-4" to="/">
+                Pro-Tasker
+              </Link>
 
       {/* User name – always shown, even on mobile */}
       {token && (
@@ -109,9 +110,9 @@ function App() {
           <>
             {/* Dashboard link – only visible in collapsed menu on mobile */}
             <li className="nav-item d-lg-none">
-              <a className="nav-link active fw-semibold text-white" href="/dashboard">
-                Dashboard
-              </a>
+              <Link className="nav-link active fw-semibold text-white" to="/dashboard">
+                        Dashboard
+                      </Link>
             </li>
 
             <li className="nav-item">
@@ -126,14 +127,14 @@ function App() {
         ) : (
           <>
             <li className="nav-item">
-              <a className="nav-link fw-semibold text-white" href="/login">
-                Login
-              </a>
+              <Link className="nav-link fw-semibold text-white" to="/login">
+                        Login
+                      </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link fw-semibold text-white" href="/register">
-                Register
-              </a>
+              <Link className="nav-link fw-semibold text-white" to="/register">
+                        Register
+                      </Link>
             </li>
           </>
         )}
