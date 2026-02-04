@@ -151,7 +151,7 @@ function App() {
             />
             <Route
               path="/register"
-              element={ <Register />}
+              element={token ? <Navigate to="/dashboard" replace /> : <Register />}
             />
             <Route
               path="/dashboard"
