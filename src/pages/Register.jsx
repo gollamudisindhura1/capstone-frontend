@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -20,27 +20,53 @@ function Register() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, {
+      console.log("=== REGISTER DEBUG START ===");
+      console.log("1. Form data:", { firstName, lastName, email });
+
+      const url = `${import.meta.env.VITE_BACKEND_URL}/api/auth/register`;
+      console.log("2. Sending to URL:", url);
+
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, firstName, lastName }),
+        body: JSON.stringify({ firstName, lastName, email, password }),
       });
 
-      const data = await response.json();
+      console.log("3. Response status:", response.status);
+      console.log("4. Response headers:", [...response.headers.entries()]);
 
-      if (!response.ok) {
-        throw new Error(data.message || "Registration failed");
+      // Read as raw text first 
+      const rawText = await response.text();
+      console.log("5. Raw response body:", rawText || "[EMPTY BODY]");
+
+      let data;
+      try {
+        data = JSON.parse(rawText);
+        console.log("6. Parsed data:", data);
+      } catch (parseErr) {
+        console.error("JSON parse failed:", parseErr);
+        throw new Error(`Invalid JSON from server: ${rawText.substring(0, 200)}...`);
       }
 
+      if (!response.ok) {
+        throw new Error(data.message || `Registration failed (${response.status})`);
+      }
+
+      console.log("7. Success - token:", data.token);
       localStorage.setItem("token", data.token);
-      localStorage.setItem('userName', data.user.firstName)
-      navigate("/dashboard");
+      localStorage.setItem("userName", data.user?.firstName || firstName);
+
+      console.log("8. Redirecting to /dashboard");
+      navigate("/dashboard", { replace: true });
+
     } catch (err) {
-      setError(err.message);
+      console.error("=== REGISTER ERROR ===", err.message);
+      setError(err.message || "Registration failed. Check console for details.");
     } finally {
       setLoading(false);
+      console.log("=== REGISTER DEBUG END ===");
     }
   };
 
@@ -48,25 +74,14 @@ function Register() {
     <div className="auth-wrapper">
       <div className="auth-card card shadow-lg border-0 rounded-4">
         <div className="card-body p-5 p-md-5">
-          <h2
-            className="text-center mb-5 fw-bold"
-            style={{ color: "var(--primary)" }}
-          >
+          <h2 className="text-center mb-5 fw-bold" style={{ color: "var(--primary)" }}>
             Register
           </h2>
 
           {error && (
-            <div
-              className="alert alert-danger alert-dismissible fade show mb-4"
-              role="alert"
-            >
+            <div className="alert alert-danger alert-dismissible fade show mb-4" role="alert">
               {error}
-
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => setError("")}
-              ></button>
+              <button type="button" className="btn-close" onClick={() => setError("")}></button>
             </div>
           )}
 
@@ -100,6 +115,7 @@ function Register() {
                 required
               />
             </div>
+
             <div className="mb-4">
               <label htmlFor="email" className="form-label fw-semibold">
                 Email address
@@ -141,10 +157,7 @@ function Register() {
 
           <p className="text-center mt-4 mb-0">
             Already have an account?{" "}
-            <a
-              href="/login"
-              className="text-primary fw-bold text-decoration-none"
-            >
+            <a href="/login" className="text-primary fw-bold text-decoration-none">
               Login here
             </a>
           </p>
