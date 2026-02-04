@@ -12,7 +12,7 @@ export default function ProjectInfo({ project, setProject }) {
     const token = localStorage.getItem('token');
 
     try {
-      const res = await fetch(`http://localhost:3000/api/projects/${project._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/projects/${project._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ export default function ProjectInfo({ project, setProject }) {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/api/projects/${project._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/projects/${project._id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

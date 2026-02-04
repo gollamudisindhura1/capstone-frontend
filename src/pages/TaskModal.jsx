@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 // Reusable modal for adding or editing a task
 
 import { useState, useEffect } from "react";
