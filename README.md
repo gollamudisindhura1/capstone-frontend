@@ -57,21 +57,19 @@ Backend API:
 - Icons: Bootstrap Icons
 - Dark/Light Theme: CSS variables + localStorage persistence
 
-## Dependencies (main ones from package.json)
+## Frontend Setup
+1. Navigate to the frontend folder: cd client
 
-```json
-{
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.0",
-    "react-big-calendar": "^1.15.0",
-    "react-big-calendar/lib/addons/dragAndDrop": "^1.15.0",
-    "date-fns": "^3.6.0",
-    "bootstrap": "^5.3.3"
-  },
-  "devDependencies": {
-    "vite": "^5.0.0",
-    "@vitejs/plugin-react": "^4.2.0"
-  }
-}
+2. Install frontend dependencies: npm install
+
+3. Run the frontend: npm run dev
+
+## Environment Variables (.env) – Required for Local Setup
+
+Create a file `.env` in the **root** of the frontend folder.
+
+```env
+# URL of your backend API (required for local development)
+VITE_API_URL=http://localhost:3000
+
+
