@@ -9,13 +9,15 @@ body {
   font-family: 'Inter', system-ui, sans-serif;
   line-height: 1.6;
   min-height: 100vh;
-  background: linear-gradient(135deg, #000814 0%, #001233 100%);
-  color: #e0f7ff;
+
+  background-color: var(--bg-body);
+  color: var(--text-primary);
   background-attachment: fixed;
   overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* Animated subtle neon particle background (CSS only) */
+/* Animated subtle neon particle background */
 body::before {
   content: "";
   position: fixed;
@@ -33,50 +35,45 @@ body::before {
   100% { opacity: 0.9; transform: scale(1.05); }
 }
 
-/* Theme variables (no purple!) */
+/* Theme variables */
 :root {
-  --bg-body: #f0f4f8;
-  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-body: linear-gradient(135deg, #e6f3ff 0%, #d6eaff 100%); /* Light: soft cyan-blue */
+  --bg-card: #ffffff;
   --text-primary: #0d1b2a;
   --text-secondary: #778da9;
   --border: #e0e7ff;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  --primary: #00f5d4;        /* Electric teal-cyan */
+  --primary: #00f5d4;               /* Electric teal-cyan */
   --primary-hover: #00d4ff;
-  --secondary: #ff00aa;       /* Neon magenta */
+  --secondary: #ff00aa;             /* Neon magenta */
   --success: #00ff9d;
   --danger: #ff4d6d;
   --warning: #ffdd57;
   --info: #00d4ff;
 }
 
-/* Dark mode (default) */
+/* Dark mode */
 [data-theme="dark"] {
-  --bg-body: #000814;
-  --bg-card: rgba(10, 25, 47, 0.75);
-  --text-primary: #e0f7ff;
-  --text-secondary: #a3bffa;
-  --border: rgba(0, 245, 212, 0.18);
-  --shadow: 0 10px 30px rgba(0, 245, 212, 0.08);
-  --primary: #00f5d4;
-  --primary-hover: #00d4ff;
-  --secondary: #ff4db8;
-  --success: #00ff9d;
-  --danger: #ff4d6d;
-  --warning: #ffdd57;
-  --info: #00d4ff;
+  --bg-body: linear-gradient(135deg, #000d1a 0%, #001233 50%, #0a1f2e 100%); /* Fancy dark teal-space */
+  --bg-card: #0f172a;               /* Deep dark slate */
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --border: rgba(0, 245, 212, 0.25);
+  --shadow: 0 10px 30px rgba(0, 245, 212, 0.12);
 }
 
-/* Apply variables */
-body {
-  background-color: var(--bg-body);
-  color: var(--text-primary);
+/* Apply variables globally – high priority */
+html, body {
+  background: var(--bg-body) !important;
+  color: var(--text-primary) !important;
 }
 
+/* Cards */
 .card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow) !important;
+  color: var(--text-primary) !important;
   backdrop-filter: blur(12px);
   border-radius: 1.25rem;
   transition: all 0.3s ease;
@@ -107,41 +104,68 @@ body {
 }
 
 /* Forms */
-.form-control {
-  background: rgba(10, 25, 47, 0.6);
-  border: 1px solid var(--border);
-  color: var(--text-primary);
+.form-control,
+.form-select,
+textarea.form-control {
+  background-color: rgba(30, 41, 59, 0.9) !important; /* slate-900 in dark */
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 0.75rem;
   padding: 0.75rem 1.25rem;
 }
 
-.form-control:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 0.25rem rgba(0, 245, 212, 0.25);
-  background: rgba(10, 25, 47, 0.8);
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 0.25rem rgba(0, 245, 212, 0.25) !important;
+  background-color: rgba(15, 23, 42, 0.95) !important;
+}
+
+.form-control::placeholder {
+  color: #94a3b8 !important;
 }
 
 /* Modals */
 .modal-content {
-  background: rgba(10, 25, 47, 0.95);
+  background: var(--bg-card) !important;
   backdrop-filter: blur(14px);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border) !important;
   border-radius: 1.5rem;
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
 }
 
-/* Navbar */
+/* ──────────────────────────────────────────────── */
+/*        NAVBAR – CHANGED TO FANCY RED-TEAL GRADIENT HEADER */
 .navbar {
-  background: rgba(10, 25, 47, 0.92) !important;
+  background: linear-gradient(90deg, #90051e 0%, #ff6b8b 50%, #352fe9 100%) !important;
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: #ffffff !important;
+}
+
+/* ──────────────────────────────────────────────── */
+/*        LOGOUT BUTTON – FIXED VISIBILITY & CONTRAST */
+.navbar .btn-outline-light,
+.navbar .btn-danger {
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.navbar .btn-outline-light:hover,
+.navbar .btn-danger:hover {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  transform: translateY(-2px);
 }
 
 /* Footer */
 footer {
-  background: rgba(5, 10, 25, 0.95);
-  border-top: 1px solid var(--border);
-  color: var(--text-secondary);
+  background: #020617 !important;
+  border-top: 1px solid var(--border) !important;
+  color: var(--text-secondary) !important;
 }
 
 /* Badges */
@@ -149,3 +173,61 @@ footer {
 .badge.bg-warning { background-color: var(--warning) !important; }
 .badge.bg-danger { background-color: var(--danger) !important; }
 .badge.bg-info { background-color: var(--info) !important; }
+
+/* Auth pages (login/register) */
+.auth-wrapper,
+.auth-card,
+.auth-card .card-body {
+  background: var(--bg-body) !important;
+  color: var(--text-primary) !important;
+}
+
+.auth-card {
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+/* Force override Bootstrap light backgrounds in dark mode */
+[data-theme="dark"] .bg-light,
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] .bg-body {
+  background-color: var(--bg-card) !important;
+}
+
+/* Make muted text readable in dark mode */
+[data-theme="dark"] .text-muted {
+  color: #94a3b8 !important;
+}
+
+/* Floating theme toggle – FANCY glowing orb (add this class in App.jsx) */
+.theme-toggle {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  color: #000814;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(0, 245, 212, 0.5);
+  border: none;
+  cursor: pointer;
+  z-index: 1050;
+  transition: all 0.4s ease;
+  animation: glow-pulse 3s infinite alternate;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.2) rotate(10deg);
+  box-shadow: 0 15px 40px rgba(0, 245, 212, 0.7);
+  animation: none;
+}
+
+@keyframes glow-pulse {
+  0% { box-shadow: 0 8px 25px rgba(0, 245, 212, 0.5); }
+  100% { box-shadow: 0 15px 40px rgba(0, 245, 212, 0.8); }
+}
