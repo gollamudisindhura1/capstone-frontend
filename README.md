@@ -39,26 +39,23 @@ Backend API:
 
 ## Screenshots
 
-### Light Mode
 <p align="center">
-  <img src="/screenshots/Screenshot 2026-02-04 at 2.13.54 PM.png" alt="Dashboard View" width="45%">
-  <img src="/frontend/public/screenshots/Screenshot 2026-02-04 at 2.12.03 PM.png" alt="Dashboard View" width="45%">
-  <img src="frontend/public/screenshots/Screenshot 2026-02-04 at 2.11.16 PM.png" alt="Dashboard View" width="45%">
-  <img src="frontend/public/screenshots/Screenshot 2026-02-04 at 2.14.04 PM.png" alt="Dark Mode Calendar" width="45%">
-  <img src="frontend/public/screenshots/Screenshot 2026-02-04 at 2.11.56 PM.png" alt="Dark Mode Calendar" width="45%">
-  <img src="frontend/public/screenshots/Screenshot 2026-02-04 at 2.11.46 PM.png" alt="Dark Mode Calendar" width="45%">
+  <img src="frontend/public/screenshots/Screenshot 2026-02-04 at 2.13.54 PM.png" alt="Dashboard Light Mode" width="45%">
+  <img src="frontend/public/screenshots/Screenshot 2026-02-04 at 2.14.04 PM.png" alt="Day Planner Dark Mode" width="45%">
+  <img src="frontend/public/screenshots/Screenshot 2026-02-04 at 2.12.03 PM.png" alt="Mobile View" width="30%">
+  <img src="frontend/public/screenshots/Screenshot 2026-02-04 at 2.11.56 PM.png" alt="Mobile View" width="30%">
 </p>
 
 ## Resources & References
 
-React: https://react.dev/
-Vite: https://vitejs.dev
-React Router: https://reactrouter.com
-React Big Calendar: https://jquense.github.io/react-big-calendar
-date-fns: https://date-fns.org
-Bootstrap 5: https://getbootstrap.com
-Icons: Bootstrap Icons
-Dark/Light Theme: CSS variables + localStorage persistence
+- React: https://react.dev/
+- Vite: https://vitejs.dev
+- React Router: https://reactrouter.com
+- React Big Calendar: https://jquense.github.io/react-big-calendar
+- date-fns: https://date-fns.org
+- Bootstrap 5: https://getbootstrap.com
+- Icons: Bootstrap Icons
+- Dark/Light Theme: CSS variables + localStorage persistence
 
 ## Dependencies (main ones from package.json)
 
