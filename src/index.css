@@ -1,5 +1,3 @@
-/* src/index.css - Cleaned & fixed version - no overwrites */
-
 /* Reset */
 * {
   margin: 0;
@@ -7,11 +5,34 @@
   box-sizing: border-box;
 }
 
-html, body {
-  min-height: 100vh;
+body {
   font-family: 'Inter', system-ui, sans-serif;
   line-height: 1.6;
-  transition: background 0.5s ease, color 0.5s ease;
+  min-height: 100vh;
+
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Animated subtle neon particle background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 15% 25%, rgba(0, 245, 212, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 85% 75%, rgba(255, 0, 170, 0.04) 0%, transparent 60%);
+  animation: pulse 15s infinite alternate ease-in-out;
+  pointer-events: none;
+  z-index: -2;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 0.9; transform: scale(1.05); }
 }
 
 /* Theme variables */
@@ -33,43 +54,18 @@ html, body {
 
 /* Dark mode */
 [data-theme="dark"] {
-  --bg-body: linear-gradient(135deg, #000d1a 0%, #001233 50%, #0a1f2e 100%);
-  --bg-card: rgba(15, 23, 42, 0.85);
-  --text-primary: #e0f7ff;
-  --text-secondary: #a3bffa;
-  --border: rgba(0, 245, 212, 0.18);
-  --shadow: 0 10px 30px rgba(0, 245, 212, 0.08);
-  --primary: #00f5d4;
-  --primary-hover: #00d4ff;
-  --secondary: #ff4db8;
-  --success: #34d399;
-  --danger: #f87171;
-  --warning: #fbbf24;
-  --info: #60a5fa;
+  --bg-body: linear-gradient(135deg, #000d1a 0%, #001233 50%, #0a1f2e 100%); /* Fancy dark teal-space */
+  --bg-card: #0f172a;               /* Deep dark slate */
+  --text-primary: #18191a;
+  --text-secondary: #94a3b8;
+  --border: rgba(0, 245, 212, 0.25);
+  --shadow: 0 10px 30px rgba(0, 245, 212, 0.12);
 }
 
-/* Apply background & text globally with high priority */
+/* Apply variables globally – high priority */
 html, body {
   background: var(--bg-body) !important;
   color: var(--text-primary) !important;
-}
-
-/* Animated subtle neon particle background */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: 
-    radial-gradient(circle at 15% 25%, rgba(0, 245, 212, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 85% 75%, rgba(255, 0, 170, 0.04) 0%, transparent 60%);
-  animation: pulse 15s infinite alternate ease-in-out;
-  pointer-events: none;
-  z-index: -2;
-}
-
-@keyframes pulse {
-  0% { opacity: 0.6; transform: scale(1); }
-  100% { opacity: 0.9; transform: scale(1.05); }
 }
 
 /* Cards */
@@ -77,6 +73,7 @@ body::before {
   background: var(--bg-card) !important;
   border: 1px solid var(--border) !important;
   box-shadow: var(--shadow) !important;
+  color: var(--text-primary) !important;
   backdrop-filter: blur(12px);
   border-radius: 1.25rem;
   transition: all 0.3s ease;
@@ -85,23 +82,23 @@ body::before {
 .card:hover {
   transform: translateY(-10px) scale(1.02);
   box-shadow: 0 25px 50px rgba(0, 245, 212, 0.12);
-  border-color: var(--primary) !important;
+  border-color: var(--primary);
 }
 
 /* Buttons with neon glow */
 .btn-primary {
-  background: linear-gradient(90deg, var(--primary), var(--secondary)) !important;
-  border: none !important;
+  background: linear-gradient(90deg, var(--primary), #00d4ff);
+  border: none;
   border-radius: 1rem;
   padding: 0.75rem 1.5rem;
   font-weight: 600;
+  color: #000814;
   transition: all 0.25s;
   box-shadow: 0 4px 15px rgba(0, 245, 212, 0.3);
-  color: #000814 !important;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(90deg, var(--primary-hover), #00b8ff) !important;
+  background: linear-gradient(90deg, var(--primary-hover), #00b8ff);
   transform: translateY(-3px);
   box-shadow: 0 10px 25px rgba(0, 245, 212, 0.5);
 }
@@ -110,7 +107,7 @@ body::before {
 .form-control,
 .form-select,
 textarea.form-control {
-  background-color: rgba(159, 186, 219, 0.9) !important;
+  background-color: rgba(159, 186, 219, 0.9) !important; /* slate-900 in dark */
   color: var(--text-primary) !important;
   border: 1px solid var(--border) !important;
   border-radius: 0.75rem;
@@ -118,11 +115,14 @@ textarea.form-control {
 }
 
 .form-control:focus,
-.form-select:focus,
-textarea.form-control:focus {
+.form-select:focus {
   border-color: var(--primary) !important;
-  box-shadow: 0 0 0 0.25rem rgba(0, 245, 212, 0.35) !important;
+  box-shadow: 0 0 0 0.25rem rgba(0, 245, 212, 0.25) !important;
   background-color: rgba(15, 23, 42, 0.95) !important;
+}
+
+.form-control::placeholder {
+  color: #94a3b8 !important;
 }
 
 /* Modals */
@@ -134,13 +134,28 @@ textarea.form-control:focus {
   color: var(--text-primary) !important;
 }
 
-/* Navbar */
+
 .navbar {
   background: linear-gradient(90deg, #90051e 0%, #ff6b8b 50%, #352fe9 100%) !important;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   color: #ffffff !important;
+}
+
+.navbar .btn-outline-light,
+.navbar .btn-danger {
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.navbar .btn-outline-light:hover,
+.navbar .btn-danger:hover {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  transform: translateY(-2px);
 }
 
 /* Footer */
@@ -156,30 +171,32 @@ footer {
 .badge.bg-danger { background-color: var(--danger) !important; }
 .badge.bg-info { background-color: var(--info) !important; }
 
-/* Auth pages override */
+/* Auth pages (login/register) */
 .auth-wrapper,
 .auth-card,
 .auth-card .card-body {
-  background: transparent !important;
+  background: var(--bg-body) !important;
   color: var(--text-primary) !important;
 }
 
-/* Force override Bootstrap light classes in dark mode */
+.auth-card {
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+/* Force override Bootstrap light backgrounds in dark mode */
 [data-theme="dark"] .bg-light,
 [data-theme="dark"] .bg-white,
-[data-theme="dark"] .bg-body,
-[data-theme="dark"] .bg-primary,
-[data-theme="dark"] .bg-secondary {
+[data-theme="dark"] .bg-body {
   background-color: var(--bg-card) !important;
-  color: var(--text-primary) !important;
 }
 
-/* Make sure muted text is readable */
+/* Make muted text readable in dark mode */
 [data-theme="dark"] .text-muted {
   color: #94a3b8 !important;
 }
 
-/* Floating theme toggle (optional - add to App.jsx if you want) */
+/* Floating theme toggle */
 .theme-toggle {
   position: fixed;
   bottom: 30px;
@@ -187,7 +204,7 @@ footer {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
   color: #000814;
   font-size: 1.8rem;
   display: flex;
@@ -210,4 +227,112 @@ footer {
 @keyframes glow-pulse {
   0% { box-shadow: 0 8px 25px rgba(0, 245, 212, 0.5); }
   100% { box-shadow: 0 15px 40px rgba(0, 245, 212, 0.8); }
+}
+
+
+/* Light mode inputs – make sure text is dark */
+[data-theme="light"] .form-control,
+[data-theme="light"] .form-select,
+[data-theme="light"] textarea.form-control {
+  background-color: #ffffff !important;     /* white background */
+  color: #0d1b2a !important;               /* dark text – very visible */
+  border: 1px solid #cbd5e1 !important;     /* light gray border */
+}
+
+/* Dark mode inputs – make sure text is light */
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] textarea.form-control {
+  background-color: #1e293b !important;     /* dark slate background */
+  color: #f1f5f9 !important;               /* very light gray-white text */
+  border: 1px solid #475569 !important;     /* visible border */
+}
+
+/* Placeholder text – always readable */
+.form-control::placeholder,
+.form-select::placeholder {
+  color: #94a3b8 !important;               /* medium gray – visible in both modes */
+  opacity: 1 !important;
+}
+
+/* Focused input – neon highlight */
+.form-control:focus,
+.form-select:focus,
+textarea.form-control:focus {
+  border-color: var(--primary) !important;  /* teal-cyan glow */
+  box-shadow: 0 0 0 0.25rem rgba(0, 245, 212, 0.35) !important;
+  background-color: var(--bg-card) !important;
+}
+/* All calendar text should be light in dark mode */
+[data-theme="dark"] .rbc-calendar,
+[data-theme="dark"] .rbc-time-view,
+[data-theme="dark"] .rbc-month-view,
+[data-theme="dark"] .rbc-week-view,
+[data-theme="dark"] .rbc-day-view {
+  color: #e2e8f0 !important;           /* slate-100 – very light gray-white */
+}
+
+/* Time column (left side: 1:00 AM, 2:00 PM, etc.) */
+[data-theme="dark"] .rbc-time-gutter,
+[data-theme="dark"] .rbc-time-header-gutter {
+  background-color: #0f172a !important; /* dark background */
+  color: #cbd5e1 !important;           /* lighter gray for times */
+}
+
+/* Day headers (Sun, Mon, Tue, etc.) */
+[data-theme="dark"] .rbc-header {
+  background-color: #1e293b !important; /* slate-900 */
+  color: #e2e8f0 !important;
+  border-bottom: 1px solid #475569 !important;
+}
+
+/* Event titles (task names) */
+[data-theme="dark"] .rbc-event-content,
+[data-theme="dark"] .rbc-event-label {
+  color: #ffffff !important;           /* pure white for readability */
+}
+
+/* Grid lines / separators */
+[data-theme="dark"] .rbc-day-slot .rbc-time-slot,
+[data-theme="dark"] .rbc-row-segment {
+  border-color: #334155 !important;     /* subtle dark gray lines */
+}
+
+/* Current time indicator (red line) – make it brighter if needed */
+[data-theme="dark"] .rbc-current-time-indicator {
+  background-color: #ff4d4d !important; /* keep red or change to teal */
+}
+
+/* Make sure toolbar text/buttons are visible */
+[data-theme="dark"] .rbc-toolbar button,
+[data-theme="dark"] .rbc-toolbar-label {
+  color: #e2e8f0 !important;
+}
+
+/* Optional: brighter background for selected date cell */
+[data-theme="dark"] .rbc-date-cell.rbc-now {
+  background-color: rgba(0, 245, 212, 0.08) !important; /* subtle teal tint */
+}
+
+/* Main project title (h2, h3, etc. in ProjectDetail) */
+[data-theme="dark"] .project-heading,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+  color: #e2e8f0 !important;           /* light gray-white – very visible */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important; /* subtle shadow for depth */
+}
+
+/* If your project title has a specific class (e.g. .project-title or .card-title) */
+[data-theme="dark"] .project-title,
+[data-theme="dark"] .card-title,
+[data-theme="dark"] .project-header h2 {
+  color: #f1f5f9 !important;           /* even brighter white-gray */
+  font-weight: 700 !important;          /* make it bolder for contrast */
+}
+
+/* Make sure any muted subtitle/description is readable */
+[data-theme="dark"] .text-muted,
+[data-theme="dark"] .project-description {
+  color: #94a3b8 !important;           /* medium light gray */
 }
