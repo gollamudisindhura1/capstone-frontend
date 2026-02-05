@@ -30,6 +30,11 @@ Frontend for **Pro-Tasker** — a full-stack task management app built with MERN
 - Time blocks with start/end times
 - User-specific data persistence (MongoDB backend)
 
+- **Day Planner / Calendar View**  
+  Interactive calendar built with **react-big-calendar** + drag-and-drop support.  
+  Tasks appear with start/end times, can be resized or moved to update schedules, and changes sync instantly to the backend via PUT requests.  
+  Supports Day, Week, and Month views with dynamic titles (e.g., "Today's Tasks", "Week of Feb 2").
+
 ## Tech Stack
 
 - **Frontend**: React 18 + Vite + React Router v6 + React Big Calendar + date-fns + Bootstrap 5
@@ -92,6 +97,24 @@ Frontend for **Pro-Tasker** — a full-stack task management app built with MERN
 - React Big Calendar integration + custom time blocks
 - Dark/light mode persistence + glassmorphism styling
 - JWT authentication + protected routes
+
+## _redirect file
+
+1. What happens WITHOUT _redirects:
+
+- User visits https://your-app.com/register directly (or refreshes the page)
+- The server looks for a file called /register or /register.html
+- It doesn't exist! (only index.html exists)
+- Server returns 404 Not Found or a blank page
+- React Router never gets a chance to run
+
+2. What happens WITH _redirects:
+
+- User visits https://your-app.com/register
+- Server reads _redirects file
+- Sees the rule: /*    /index.html   200
+- Server serves index.html for ANY route (/* means "all routes")
+index.html loads → React loads → React Router sees /register → Shows Register component
 
 ## Future Plans 
 
