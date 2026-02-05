@@ -2,41 +2,41 @@
 
 ## Overview
 
-Frontend for Pro-Tasker this is a full-stack task management app.  
-- Users can register/login
-- Manage projects 
-- Create/edit tasks with due dates/times/priorities/statuses.
-- View tasks in an interactive Day/Week/Month planner.
+Frontend for **Pro-Tasker** — a full-stack task management app built with MERN stack.  
+- Secure user registration & login (JWT authentication)  
+- Create, view, update, delete projects & tasks  
+- Interactive Day/Week/Month planner with drag-and-drop support  
+- Priority coloring, status badges, time blocks, dark/light mode  
 
-Live Demo: https://pro-tasker-capstone-frontend.onrender.com 
-
-Backend API: https://pro-tasker-capstone-backend.onrender.com
+**Live Demo (Frontend):** https://pro-tasker-capstone-frontend.onrender.com  
+**Live API (Backend):** https://pro-tasker-capstone-backend.onrender.com  
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
   <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62C" alt="Vite">
   <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap">
-  
+  <img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white" alt="Render">
 </p>
 
 ## Features
 
-- Responsive design (desktop + mobile)
-- Dark / Light mode toggle (saved in localStorage)
-- User authentication (protected routes)
+- Responsive design (mobile + desktop friendly)
+- Dark / Light mode toggle (persisted in localStorage)
+- Protected routes (only logged-in users can access dashboard/projects)
 - Project list + detail view
-- Task CRUD (create/read/update/delete) with drag-and-drop calendar support
-- Priority coloring, status badges, time blocks
-- Calendar views: Day, Week, Month with dynamic titles
+- Full **CRUD** for tasks: create/read/update/delete
+- Drag-and-drop calendar (Day, Week, Month views) using react-big-calendar
+- Priority-based coloring (Low/Medium/High) + status badges (To Do/In Progress/Done)
+- Time blocks with start/end times
+- User-specific data persistence (MongoDB backend)
 
 ## Tech Stack
 
-- React 18 + Vite
-- React Router v6
-- React Big Calendar + drag-and-drop addon
-- date-fns
-- Bootstrap 5
-- Custom CSS variables for theming
+- **Frontend**: React 18 + Vite + React Router v6 + React Big Calendar + date-fns + Bootstrap 5
+- **Styling**: Custom CSS variables + glassmorphism + neon gradients
+- **Deployment**: Render (Static Site for frontend, Web Service for backend)
+- **Icons**: Bootstrap Icons
+- **Theme**: Custom dark/light mode with localStorage persistence
 
 ## Screenshots
 
@@ -58,19 +58,47 @@ Backend API: https://pro-tasker-capstone-backend.onrender.com
 - Icons: Bootstrap Icons
 - Dark/Light Theme: CSS variables + localStorage persistence
 
-## Frontend Setup
-1. Navigate to the frontend folder: cd client
+## Frontend Setup (Local Development)
 
-2. Install frontend dependencies: npm install
+1. Navigate to the frontend folder:
+   ```bash
+   cd client
 
-3. Run the frontend: npm run dev
+2. Install dependencies:
+- npm install
 
-## Environment Variables (.env) – Required for Local Setup
+3. Create .env.local in the frontend root:
+- VITE_BACKEND_URL=http://localhost:3000
 
-Create a file `.env` in the **root** of the frontend folder.
+4. Run the development server:
+- npm run dev
 
-```env
-# URL of your backend API (required for local development)
-VITE_API_URL=http://localhost:3000
+## Deployment
 
+1. Frontend: Deployed as Static Site on Render
 
+- Live URL: https://pro-tasker-capstone-frontend.onrender.com
+
+2. Backend: Deployed as Web Service on Render
+
+- Live API: https://pro-tasker-capstone-backend.onrender.com
+
+3. Environment Variable (Render Frontend)
+
+- VITE_BACKEND_URL = https://pro-tasker-capstone-backend.onrender.com
+
+## Challenges & Learnings
+
+- Deployment on Render (free tier sleep, CORS setup, env variables)
+- Full CRUD with nested routes (projects → tasks)
+- React Big Calendar integration + custom time blocks
+- Dark/light mode persistence + glassmorphism styling
+- JWT authentication + protected routes
+
+## Future Plans 
+
+- Real-time collaboration
+- Email reminders for due tasks
+- Task comments / attachments
+- Mobile app (React Native)
+- Analytics dashboard (task completion stats)
