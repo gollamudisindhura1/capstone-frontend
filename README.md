@@ -39,13 +39,11 @@ Frontend for **Pro-Tasker** — a full-stack task management app built with MERN
 - **Theme**: Custom dark/light mode with localStorage persistence
 
 ## Screenshots
+![alt text](<frontend/public/screenshots/Screenshot 2026-02-04 at 2.13.54 PM.png>)
+![alt text](<frontend/public/screenshots/Screenshot 2026-02-04 at 2.14.04 PM.png>)
+![alt text](<frontend/public/screenshots/Screenshot 2026-02-04 at 2.12.03 PM.png>)
+![alt text](<frontend/public/screenshots/Screenshot 2026-02-04 at 2.11.56 PM.png>)
 
-<p align="center">
-  <img src="frontend/public/screenshots/Screenshot 2026-02-04 at 2.13.54 PM.png" alt="Dashboard Light Mode" width="45%">
-  <img src="frontend/public/screenshots/Screenshot 2026-02-04 at 2.14.04 PM.png" alt="Day Planner Dark Mode" width="45%">
-  <img src="frontend/public/screenshots/Screenshot 2026-02-04 at 2.12.03 PM.png" alt="Mobile View" width="30%">
-  <img src="frontend/public/screenshots/Screenshot 2026-02-04 at 2.11.56 PM.png" alt="Mobile View" width="30%">
-</p>
 
 ## Resources & References
 
