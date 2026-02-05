@@ -5,7 +5,7 @@ import {
   Routes,
   Route,
   Navigate,
-  Link
+  Link,
 } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Login from "./pages/Login";
@@ -15,6 +15,7 @@ import ProjectDetail from "./pages/ProjectDetail";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
+
 
   // Dark mode state
   const [theme, setTheme] = useState(() => {
@@ -65,8 +66,7 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setToken(null);
-    window.location.href = "/login"; // Force reload to clear any state race
-    // Alternative: navigate('/login', { replace: true }); // if you prefer
+    //window.location.href = "/login"; // Force reload navigate("/login", { replace: true });
   };
 
   return (

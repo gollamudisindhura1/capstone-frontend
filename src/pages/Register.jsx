@@ -20,13 +20,16 @@ function Register() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password, firstName, lastName }),
         },
-        body: JSON.stringify({ email, password, firstName, lastName }),
-      });
+      );
 
       const data = await response.json();
 
@@ -35,7 +38,7 @@ function Register() {
       }
 
       localStorage.setItem("token", data.token);
-      localStorage.setItem('userName', data.user.firstName)
+      localStorage.setItem("userName", data.user.firstName);
       navigate("/dashboard");
     } catch (err) {
       setError(err.message);
@@ -144,9 +147,9 @@ function Register() {
             <Link
               to="/login"
               className="text-primary fw-bold text-decoration-none"
-            />
+            >
               Login here
-          
+            </Link>
           </p>
         </div>
       </div>
