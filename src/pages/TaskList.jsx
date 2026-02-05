@@ -278,7 +278,7 @@ export default function TaskList({ tasks, setTasks, projectId }) {
         </div>
       )}
 
-      {/* modal props – now uses the unified handler */}
+      {/* modal props */}
       <TaskModal
         isOpen={showTaskModal}
         onClose={() => {

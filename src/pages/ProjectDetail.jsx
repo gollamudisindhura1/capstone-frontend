@@ -5,7 +5,7 @@ import ProjectInfo from './ProjectInfo';
 import DayPlanner from '../components/DayPlanner'
 
 function ProjectDetail() {
-  const { id } = useParams(); // project ID from URL
+  const { id } = useParams(); 
   const navigate = useNavigate();
 
   const [project, setProject] = useState(null);

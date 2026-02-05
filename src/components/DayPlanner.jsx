@@ -59,7 +59,7 @@ export default function DayPlanner({ tasks, projectId, setTasks }) {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3000/api/projects/${projectId}/tasks/${task._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/projects/${projectId}/tasks/${task._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -120,7 +120,6 @@ export default function DayPlanner({ tasks, projectId, setTasks }) {
           </button>
         </div>
 
-        {/* Fancy centered title */}
         <h3 
           className="text-center mb-3 fw-bold" 
           style={{ 

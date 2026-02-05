@@ -74,7 +74,7 @@ function Dashboard() {
 
     if (!res.ok) throw new Error(data.message || 'Failed to create project');
 
-    // Add new project to list (optimistic update)
+    // Add new project to list 
     setProjects([...projects, data]);
     setShowCreateModal(false);
     setNewProjectName('');
@@ -112,7 +112,7 @@ function Dashboard() {
     <div className="text-center mb-4">
       <button
         className="btn btn-success btn-lg"
-        onClick={() => setShowCreateModal(true)}  // Opens modal
+        onClick={() => setShowCreateModal(true)}  
       >
         Create New Project
       </button>
